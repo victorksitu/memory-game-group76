@@ -217,7 +217,8 @@ const App = () => {
       cells.push(
         <div
           key={i} // Use index as key, as tile values can change and be duplicated
-          className={`w-full h-full ${cellClasses}`} // Ensure tile fills its grid cell
+          // Removed `w-full h-full` from here
+          className={`${cellClasses}`}
           onClick={() => handleTileClick(i)} // Pass the tile's index to the click handler
         >
           {tileValue}
@@ -227,11 +228,10 @@ const App = () => {
     return (
       <div
         ref={gridRef}
-        // Changed back to `grid` for a square grid layout.
-        // `grid-cols-${currentGridDimension}` for dynamic columns.
+        // Explicitly defining grid columns for robustness.
         // `max-w-2xl` for overall width, `aspect-square` for square shape.
-        // `py-4 px-4` and `gap-2` for padding and spacing.
-        className={`grid grid-cols-${currentGridDimension} gap-2 p-4 rounded-xl shadow-xl w-full max-w-2xl aspect-square
+        // `p-4` and `gap-2` for padding and spacing.
+        className={`grid ${currentGridDimension === 3 ? 'grid-cols-3' : currentGridDimension === 4 ? 'grid-cols-4' : ''} gap-2 p-4 rounded-xl shadow-xl w-full max-w-2xl aspect-square
           ${gameState === 'memorize_original' ? 'bg-black bg-opacity-30' : 'bg-gray-900'}
         `}
       >
