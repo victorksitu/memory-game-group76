@@ -19,14 +19,12 @@ const App = () => {
   const [countdown, setCountdown] = useState(0); // New state for countdown timer
   const gridRef = useRef(null);
 
-  // Dynamic grid dimension based on numTiles for layout.
-  // Calculates the side length of the smallest square grid that can contain numTiles.
-  // We ensure a minimum of 3x3 for visual appeal.
+
   const currentGridDimension = numTiles ? Math.max(3, Math.ceil(Math.sqrt(numTiles))) : 3;
 
   // Constants for game logic
-  const BASE_SCORE_PER_CORRECT = 20; // Changed to 20 points per correct identification
-  const TOTAL_SCORE_TO_WIN = 100; // Updated from 300 to 100 points to win
+  const BASE_SCORE_PER_CORRECT = 20;
+  const TOTAL_SCORE_TO_WIN = 100;
   const NUMBER_POOL_MAX = 100; // Numbers will vary from 1 to 100
 
   // Function to generate 'count' unique random numbers from 1 to NUMBER_POOL_MAX
