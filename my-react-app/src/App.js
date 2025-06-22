@@ -270,7 +270,7 @@ const App = () => {
 
       {/* Header */}
       <h1 className="text-5xl font-extrabold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 animate-pulse">
-        Odd One Out Challenge
+        Odd One Out
       </h1>
 
       {/* Current Total Score */}
