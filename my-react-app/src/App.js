@@ -198,11 +198,13 @@ const App = () => {
 
       // Apply styling based on game state and tile properties
       if (gameState === 'memorize_original') {
-        cellClasses += ' bg-gray-800 text-gray-50'; // All tiles visible during initial memorize
+        // Tiles during observation phase: dark background, light text
+        cellClasses += ' bg-gray-800 text-gray-50';
       } else if (gameState === 'odd_one_out_recall') {
+        // Tiles during recall phase: blue when selected, otherwise dark
         cellClasses += isSelected ? ' bg-blue-500 text-white shadow-lg' : ' bg-gray-800 text-gray-50 hover:bg-gray-700';
       } else if (gameState === 'round_win' || gameState === 'overall_win' || gameState === 'game_over') {
-        // After game ends, highlight the correct changed tile or user's incorrect selection
+        // After game ends: green for changed, red for incorrect selection, dark for others
         if (i === changedTileIndex) {
           cellClasses += ' bg-green-500 text-white animate-pulse'; // Highlight the correct changed tile
         } else if (isSelected && i !== changedTileIndex) {
@@ -215,7 +217,7 @@ const App = () => {
       cells.push(
         <div
           key={i} // Use index as key, as tile values can change and be duplicated
-          className={cellClasses}
+          className={`flex-1 min-h-[50px] ${cellClasses}`} // flex-1 and min-h can remain or be adjusted based on desired square tile size
           onClick={() => handleTileClick(i)} // Pass the tile's index to the click handler
         >
           {tileValue}
@@ -225,7 +227,10 @@ const App = () => {
     return (
       <div
         ref={gridRef}
-        // Dynamically set grid columns using Tailwind's arbitrary values
+        // Changed back to `grid` for a square grid layout.
+        // `grid-cols-${currentGridDimension}` for dynamic columns.
+        // `max-w-2xl` for overall width, `aspect-square` for square shape.
+        // `py-4 px-4` and `gap-2` for padding and spacing.
         className={`grid grid-cols-${currentGridDimension} gap-2 p-4 rounded-xl shadow-xl w-full max-w-2xl aspect-square
           ${gameState === 'memorize_original' ? 'bg-black bg-opacity-30' : 'bg-gray-900'}
         `}
