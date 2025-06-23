@@ -2,26 +2,24 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 // Main App Component
 const App = () => {
-  const [gameState, setGameState] = useState('start'); // 'start', 'difficulty', 'number_selection', 'memorize_original', 'odd_one_out_recall', 'round_win', 'overall_win', 'game_over'
-  const [difficulty, setDifficulty] = useState(null); // 'easy', 'medium', 'hard'
-  const [numTiles, setNumTiles] = useState(null); // Number of tiles in the grid
-  const [originalGridNumbers, setOriginalGridNumbers] = useState([]); // Numbers in their initial, ordered state
-  const [currentGridNumbers, setCurrentGridNumbers] = useState([]); // Numbers currently displayed on grid (can be original or modified/scrambled)
-  const [preparedRecallNumbers, setPreparedRecallNumbers] = useState([]); // The final grid state (scrambled with one changed number) for the recall phase
-  const [changedTileIndex, setChangedTileIndex] = useState(null); // Index of the tile that changed in the *preparedRecallNumbers* array
-  const [selectedTileIndex, setSelectedTileIndex] = useState(null); // Index of the tile selected by the user
-  const [roundScore, setRoundScore] = useState(0); // Score for the current round (either 0 or BASE_SCORE_PER_CORRECT)
-  const [totalScore, setTotalScore] = useState(0); // Cumulative score across rounds
+  const [gameState, setGameState] = useState('start');
+  const [difficulty, setDifficulty] = useState(null);
+  const [numTiles, setNumTiles] = useState(null);
+  const [originalGridNumbers, setOriginalGridNumbers] = useState([]);
+  const [currentGridNumbers, setCurrentGridNumbers] = useState([]);
+  const [preparedRecallNumbers, setPreparedRecallNumbers] = useState([]);
+  const [changedTileIndex, setChangedTileIndex] = useState(null);
+  const [selectedTileIndex, setSelectedTileIndex] = useState(null);
+  const [roundScore, setRoundScore] = useState(0);
+  const [totalScore, setTotalScore] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [modalActions, setModalActions] = useState([]);
-  const [countdown, setCountdown] = useState(0); // New state for countdown timer
+  const [countdown, setCountdown] = useState(0);
   const gridRef = useRef(null);
 
   // Dynamic grid dimension based on numTiles for layout.
-  // Calculates the side length of the smallest square grid that can contain numTiles.
-  // We ensure a minimum of 3x3 for visual appeal.
   const currentGridDimension = numTiles ? Math.max(3, Math.ceil(Math.sqrt(numTiles))) : 3;
 
   // Constants for game logic
@@ -42,11 +40,9 @@ const App = () => {
     setRoundScore(0); // Reset round score for the new round
     setSelectedTileIndex(null); // Clear user selection
 
-    // 1. Generate initial unique numbers for the grid (in order)
     const initialNumbers = generateUniqueNumbers(count);
     setOriginalGridNumbers([...initialNumbers]); // Store for the initial "memorize_original" phase
 
-    // 2. Prepare the grid that will be shown during the recall phase (scrambled with one change)
     let finalRecallNumbers = [...initialNumbers];
     const originalIndexToChange = Math.floor(Math.random() * initialNumbers.length); // Random index to change
 
